@@ -16,14 +16,17 @@ describe 'openldap::client::install' do
 
         it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_class('openldap::client::install') }
-
         case facts[:os]['family']
         when 'Debian'
           case facts[:os]['release']['major']
-          when '12', '22.04', '24.04'
+          when '24.04'
+            it {
+              is_expected.to contain_package('libldap-2.6-0').with(ensure: :installed)
+            }
+          when '12', '22.04'
             it {
               is_expected.to contain_package('libldap-2.5-0').with(ensure: :installed)
-            }
+          }
           else
             it {
               is_expected.to contain_package('libldap-2.4-2').with(ensure: :installed)

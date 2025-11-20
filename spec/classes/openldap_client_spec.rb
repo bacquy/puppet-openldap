@@ -16,30 +16,39 @@ describe 'openldap::client' do
         case facts[:os]['family']
         when 'Debian'
           case facts[:os]['release']['major']
-          when '12', '22.04', '24.04'
+          when '24.04'
+            it {
+              is_expected.to contain_class('openldap::client').with(package: 'libldap-2.6-0',
+                file: '/etc/ldap/ldap.conf',
+                base: nil,
+                uri: nil,
+                tls_cacert: nil
+              )
+            }
+          when '12', '22.04'
             it {
               is_expected.to contain_class('openldap::client').with(package: 'libldap-2.5-0',
-                                                                    file: '/etc/ldap/ldap.conf',
-                                                                    base: nil,
-                                                                    uri: nil,
-                                                                    tls_cacert: nil)
+                file: '/etc/ldap/ldap.conf',
+                base: nil,
+                uri: nil,
+                tls_cacert: nil)
             }
           else
             it {
               is_expected.to contain_class('openldap::client').with(package: 'libldap-2.4-2',
-                                                                    file: '/etc/ldap/ldap.conf',
-                                                                    base: nil,
-                                                                    uri: nil,
-                                                                    tls_cacert: nil)
+                file: '/etc/ldap/ldap.conf',
+                base: nil,
+                uri: nil,
+                tls_cacert: nil)
             }
           end
         when 'RedHat'
           it {
             is_expected.to contain_class('openldap::client').with(package: 'openldap',
-                                                                  file: '/etc/openldap/ldap.conf',
-                                                                  base: nil,
-                                                                  uri: nil,
-                                                                  tls_cacert: nil)
+              file: '/etc/openldap/ldap.conf',
+              base: nil,
+              uri: nil,
+              tls_cacert: nil)
           }
         end
       end
