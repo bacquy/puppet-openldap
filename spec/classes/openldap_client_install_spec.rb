@@ -20,7 +20,7 @@ describe 'openldap::client::install' do
         case facts[:os]['family']
         when 'Debian'
           case facts[:os]['release']['major']
-          when '12', '22.04'
+          when '12', '22.04', '24.04'
             it {
               is_expected.to contain_package('libldap-2.5-0').with(ensure: :installed)
             }
